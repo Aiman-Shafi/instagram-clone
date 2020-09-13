@@ -1,24 +1,45 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from './components/Header/Header';
+import Post from './components/Post/Post';
+import { useState } from 'react';
+import fakedata from './components/fakedata.json'
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
 
 function App() {
+  //const [post, setpost] = useState([])
+  
+
+  // Like Handler
+  const [like, setLikes] = useState('');
+  const [count, setCount] = useState(0);
+  const likeHandler = () => {
+    let color = '';
+    let likes = 0;
+      if (like === ''){
+        color = 'secondary';
+        setLikes(color);
+        likes = count+1;
+        setCount(likes);
+      }
+       else 
+        setLikes(color);
+        setCount(likes); 
+    console.log('clicked')        
+  }
+  
   return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Header></Header>
+        <FavoriteIcon onClick={likeHandler} color={like}></FavoriteIcon> 
+        <span>{count} Likes</span>
+       <div>
+          {
+            fakedata.map(demoPost => <Post demoPost={demoPost} likeHandler={likeHandler} like={like} count={count} key={demoPost.id}></Post>)
+          }
+       </div>
     </div>
   );
 }
